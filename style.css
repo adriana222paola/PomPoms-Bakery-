@@ -1,0 +1,642 @@
+:root {
+    /* --- Neapolitan & Pompompurin Palette --- */
+    --pom-yellow: #FFF4B8;    /* Pompompurin Body */
+    --pom-brown: #6B4E3D;     /* Beret/Pudding Caramel */
+    --cream: #FFFDF5;         /* Vanilla */
+    --strawberry: #FFB7B2;    /* Pink */
+    --strawberry-dark: #FF9E99;
+    --chocolate: #4E342E;     /* Dark Text */
+    --success: #8BC34A;       /* Green for positive actions */
+    
+    /* UI Variables */
+    --bg-body: var(--cream);
+    --bg-card: #FFFFFF;
+    --text-main: var(--chocolate);
+    --text-light: #8D6E63;
+    --primary: var(--pom-brown);
+    --accent: var(--strawberry);
+    --border: #F0E6D2;
+    --shadow: 0 12px 30px rgba(107, 78, 61, 0.12);
+    --radius: 24px;
+    --font-heading: 'Fredoka', sans-serif;
+    --font-body: 'Outfit', sans-serif;
+
+    /* Cake Elements */
+    --icing: #FFFFFF;
+    --sponge-yellow: #FFF9C4;
+}
+
+[data-theme="dark"] {
+    --bg-body: #1E1A17;
+    --bg-card: #2D2420;
+    --text-main: #F5E6D3;
+    --text-light: #BCAAA4;
+    --primary: #FFD54F;
+    --accent: #FF8A80;
+    --border: #4E342E;
+    --shadow: 0 12px 30px rgba(0,0,0,0.5);
+    --cream: #3E322C;
+    --sponge-yellow: #4E3D30;
+    --icing: #2D2420;
+}
+
+[data-theme="dark"] .nav-wrapper { 
+    background: rgba(45, 36, 32, 0.85); 
+    border-color: var(--chocolate); 
+}
+
+[data-theme="dark"] .image-upload-wrapper {
+    background: var(--sponge-yellow);
+    border-color: var(--primary);
+}
+
+[data-theme="dark"] .converter-box {
+    background: #251D1A;
+}
+
+[data-theme="dark"] .result-display {
+    background: #1E1A17;
+    color: var(--primary);
+}
+
+[data-theme="dark"] input, 
+[data-theme="dark"] select, 
+[data-theme="dark"] textarea {
+    background: #3E322C;
+    border-color: #5D4037;
+    color: #F5E6D3;
+}
+
+[data-theme="dark"] input:focus, 
+[data-theme="dark"] textarea:focus {
+    background: #4E3D30;
+    border-color: var(--primary);
+}
+
+[data-theme="dark"] ::placeholder {
+    color: rgba(245, 230, 211, 0.4);
+}
+
+[data-theme="dark"] label {
+    color: var(--primary);
+}
+
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: var(--font-body);
+    background-color: var(--bg-body);
+    background-image: radial-gradient(var(--border) 1.5px, transparent 1.5px);
+    background-size: 30px 30px;
+    color: var(--text-main);
+    transition: background 0.3s, color 0.3s;
+    padding-bottom: 80px;
+    overflow-x: hidden;
+}
+
+/* --- Sprinkles Layer --- */
+.sprinkles-container {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: -1;
+    overflow: hidden;
+}
+
+.sprinkle {
+    position: absolute;
+    width: 6px; height: 15px;
+    border-radius: 10px;
+    opacity: 0.6;
+    animation: float 20s infinite linear;
+}
+
+@keyframes float {
+    0% { transform: translateY(-100px) rotate(0deg); opacity: 0; }
+    10% { opacity: 0.6; }
+    90% { opacity: 0.6; }
+    100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+}
+
+/* --- Dripping Icing Effect --- */
+.dripping-header {
+    position: relative;
+    background: var(--strawberry);
+    padding-bottom: 40px;
+}
+
+.drip-svg {
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 100%;
+    fill: var(--bg-body);
+    filter: drop-shadow(0 4px 4px rgba(0,0,0,0.05));
+    transition: fill 0.3s;
+}
+
+/* Typography */
+h1, h2, h3 { font-family: var(--font-heading); color: var(--text-main); margin-top: 0; }
+h1 { color: var(--primary); }
+
+/* Layout */
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+    position: relative;
+}
+
+/* Header */
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 0;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-size: 2rem;
+    font-weight: 700;
+    color: white;
+    text-shadow: 2px 2px var(--strawberry-dark);
+}
+
+.logo-img { 
+    height: 64px; 
+    width: 64px; 
+    object-fit: contain;
+    border-radius: 50%;
+    background: white;
+    padding: 5px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+/* Navigation */
+.nav-wrapper {
+    position: sticky;
+    top: 20px;
+    z-index: 100;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(12px);
+    padding: 12px;
+    border-radius: 40px;
+    box-shadow: var(--shadow);
+    margin: 20px 0 40px 0;
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    border: 3px solid var(--pom-yellow);
+}
+
+[data-theme="dark"] .nav-wrapper { background: rgba(62, 50, 44, 0.85); border-color: var(--chocolate); }
+
+.nav-btn {
+    border: none;
+    background: none;
+    padding: 12px 24px;
+    border-radius: 30px;
+    font-family: var(--font-heading);
+    font-weight: 600;
+    color: var(--text-light);
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.nav-btn:hover { color: var(--primary); transform: scale(1.05); }
+.nav-btn.active { 
+    background: var(--primary); 
+    color: white; 
+    box-shadow: 0 6px 15px rgba(107, 78, 61, 0.3);
+}
+
+/* Sections */
+.section { display: none; animation: slideUp 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+.section.active { display: block; }
+
+@keyframes slideUp { 
+    from { opacity: 0; transform: translateY(30px) scale(0.95); } 
+    to { opacity: 1; transform: translateY(0) scale(1); } 
+}
+
+/* --- Neapolitan Cake Card Styling --- */
+.cake-card {
+    background: linear-gradient(to bottom, var(--strawberry) 33.33%, var(--cream) 33.33%, var(--cream) 66.66%, var(--pom-yellow) 66.66%) !important;
+    border: 4px solid var(--pom-brown) !important;
+    position: relative;
+    overflow: hidden;
+}
+
+.cake-card::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; height: 15px;
+    background: repeating-linear-gradient(45deg, white, white 10px, transparent 10px, transparent 20px);
+    opacity: 0.3;
+}
+
+/* Cards & Grid */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 30px;
+}
+
+.card {
+    background: var(--bg-card);
+    border-radius: var(--radius);
+    padding: 30px;
+    box-shadow: var(--shadow);
+    border: 3px solid var(--border);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+    cursor: pointer;
+}
+
+.card:hover { 
+    transform: translateY(-8px); 
+    border-color: var(--accent);
+    animation: wobble 0.6s ease-in-out;
+}
+
+@keyframes wobble {
+    0% { transform: translateY(-8px) rotate(0deg); }
+    15% { transform: translateY(-8px) rotate(-2deg); }
+    30% { transform: translateY(-8px) rotate(2deg); }
+    45% { transform: translateY(-8px) rotate(-1deg); }
+    60% { transform: translateY(-8px) rotate(1deg); }
+    100% { transform: translateY(-8px) rotate(0deg); }
+}
+
+/* Modern Pastry Form */
+#tab-add .card {
+    background: var(--bg-card);
+    border: none;
+    padding: 0;
+    overflow: hidden;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+}
+
+#tab-add .card h2 {
+    background: var(--strawberry);
+    color: white;
+    margin: 0;
+    padding: 30px;
+    text-align: center;
+    font-size: 2.2rem;
+    text-shadow: 2px 2px var(--strawberry-dark);
+}
+
+#recipeForm {
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+label {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    color: var(--pom-brown);
+    font-size: 1.1rem;
+    margin-left: 5px;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 16px 20px;
+    border: 3px solid var(--border);
+    border-radius: 18px;
+    font-family: inherit;
+    font-size: 1rem;
+    background: var(--cream);
+    color: var(--text-main);
+    transition: all 0.3s;
+}
+
+input:focus, textarea:focus { 
+    outline: none; 
+    border-color: var(--strawberry); 
+    background: white;
+    box-shadow: 0 0 0 6px rgba(255, 183, 178, 0.2);
+}
+
+/* Image Upload */
+.image-upload-wrapper {
+    background: var(--sponge-yellow);
+    border: 3px dashed var(--pom-brown);
+    border-radius: 20px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    min-height: 200px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 18px 30px;
+    border-radius: 50px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: var(--font-heading);
+    font-size: 1.2rem;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 6px 0 var(--chocolate);
+    position: relative;
+    top: 0;
+}
+
+.btn:active { top: 4px; box-shadow: 0 2px 0 var(--chocolate); }
+.btn-secondary { 
+    background: var(--cream); 
+    color: var(--pom-brown); 
+    border: 3px solid var(--pom-brown); 
+    box-shadow: 0 6px 0 var(--pom-brown);
+}
+
+/* Custom Tag Colors */
+.tag {
+    display: inline-block;
+    padding: 6px 14px;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 0.85rem;
+    background: var(--pom-yellow);
+    color: var(--pom-brown);
+    border: 2px solid rgba(107, 78, 61, 0.1);
+}
+
+.tag-pie { background: #FFCCBC; color: #BF360C; }
+.tag-muffin { background: #D1C4E9; color: #4527A0; }
+.tag-cake { background: #F8BBD0; color: #880E4F; }
+
+/* Kitchen Helpers / Converters - Redesigned */
+.converter-container {
+    background: var(--bg-card);
+    border: 6px double var(--pom-brown);
+    border-radius: 40px;
+    padding: 50px;
+    box-shadow: var(--shadow);
+    background-image: radial-gradient(var(--border) 1px, transparent 1px);
+    background-size: 20px 20px;
+}
+
+.converter-box {
+    padding: 30px;
+    border-radius: 28px;
+    border: none;
+    background: var(--cream);
+    box-shadow: 0 10px 20px rgba(107, 78, 61, 0.08);
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    display: flex;
+    flex-direction: column;
+}
+
+.converter-box:hover {
+    transform: translateY(-5px) rotate(1deg);
+}
+
+.converter-box h3 {
+    text-align: center;
+    font-size: 1.4rem;
+    margin-bottom: 25px;
+    color: var(--chocolate);
+}
+
+.result-display {
+    font-size: 1.3rem;
+    font-weight: 800;
+    text-align: center;
+    padding: 18px;
+    background: var(--pom-yellow);
+    border-radius: 20px;
+    border: 3px dashed var(--pom-brown);
+    color: var(--pom-brown);
+    margin-top: 10px;
+    box-shadow: inset 0 4px 8px rgba(0,0,0,0.05);
+}
+
+[data-theme="dark"] .converter-container {
+    background-image: radial-gradient(rgba(255,255,255,0.05) 1px, transparent 1px);
+}
+
+[data-theme="dark"] .converter-box {
+    background: #362B26;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+[data-theme="dark"] .result-display {
+    background: #4E3D30;
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+/* Pantry Tracker - Advanced Design */
+.pantry-input-group {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 35px;
+    align-items: flex-end;
+    background: var(--sponge-yellow);
+    padding: 25px;
+    border-radius: 24px;
+    border: 3px dashed var(--pom-brown);
+}
+
+.pantry-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.pantry-card {
+    background: var(--bg-card);
+    border: 3px solid var(--border);
+    border-radius: 24px;
+    padding: 20px;
+    text-align: center;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+    box-shadow: var(--shadow);
+}
+
+.pantry-card:hover {
+    transform: translateY(-5px) scale(1.02);
+    border-color: var(--accent);
+}
+
+.pantry-icon {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    display: block;
+}
+
+.pantry-name {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    color: var(--pom-brown);
+    font-size: 1.1rem;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.pantry-qty {
+    font-size: 0.9rem;
+    color: var(--text-light);
+    font-weight: 600;
+    background: var(--cream);
+    padding: 4px 12px;
+    border-radius: 12px;
+}
+
+.pantry-actions {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.btn-mini {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: none;
+    background: var(--pom-yellow);
+    color: var(--pom-brown);
+    font-weight: 800;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.2s;
+}
+
+.btn-mini:hover {
+    background: var(--primary);
+    color: white;
+}
+
+[data-theme="dark"] .pantry-card {
+    background: #2D2420;
+    border-color: #4E342E;
+}
+
+[data-theme="dark"] .pantry-qty {
+    background: #1E1A17;
+}
+
+/* Shopping List - Improved Design */
+.shopping-input-group {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 30px;
+    background: var(--strawberry);
+    padding: 25px;
+    border-radius: 24px;
+    box-shadow: 0 8px 20px rgba(255, 183, 178, 0.3);
+    align-items: flex-end;
+}
+
+.shopping-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--bg-card);
+    padding: 20px;
+    border-radius: 18px;
+    margin-bottom: 15px;
+    border: 3px solid var(--border);
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.shopping-item:hover {
+    border-color: var(--primary);
+    transform: translateX(5px);
+}
+
+.shopping-item.checked {
+    background: #f0f0f0;
+    border-color: var(--success);
+    opacity: 0.7;
+}
+
+.shopping-item.checked strong {
+    text-decoration: line-through;
+    color: var(--text-light);
+}
+
+.checkbox-custom {
+    width: 28px;
+    height: 28px;
+    border: 3px solid var(--pom-brown);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 900;
+    transition: 0.2s;
+    background: white;
+}
+
+.checked .checkbox-custom {
+    background: var(--success);
+    border-color: var(--success);
+    color: white;
+}
+
+[data-theme="dark"] .shopping-item {
+    background: #2D2420;
+    border-color: #4E342E;
+}
+
+[data-theme="dark"] .shopping-item.checked {
+    background: #1E1A17;
+}
+
+/* Floating Action Button */
+.fab {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background: var(--strawberry);
+    color: white;
+    font-size: 2.5rem;
+    border: 4px solid white;
+    box-shadow: 0 8px 20px rgba(255, 183, 178, 0.6);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 200;
+    transition: 0.3s;
+}
+
+@media (max-width: 600px) {
+    .grid { grid-template-columns: 1fr; }
+    .nav-wrapper { border-radius: 20px; flex-direction: column; }
+    #recipeForm { padding: 20px; }
+    .converter-container { padding: 20px; }
+}

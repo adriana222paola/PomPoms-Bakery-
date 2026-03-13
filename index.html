@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pompompurin's Dessert Recipes</title>
+    <!-- Cute Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Floating Sprinkles Background -->
+    <div class="sprinkles-container" id="sprinkles"></div>
+
+    <div class="dripping-header">
+        <div class="container">
+            <header>
+                <div class="brand">
+                    <img src="img/pompompurin icon _ sticker.jpg" alt="Pompompurin" class="logo-img">
+                    Pompom's Bakery
+                </div>
+                <button id="theme-btn" class="nav-btn" onclick="APP.toggleTheme()" style="background:rgba(255,255,255,0.3); color:white; border:2px solid white;">🌙 Theme</button>
+            </header>
+        </div>
+        <!-- Dripping Icing SVG -->
+        <svg class="drip-svg" viewBox="0 0 1440 120" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0,32L60,42.7C120,53,240,75,360,74.7C480,75,600,53,720,42.7C840,32,960,32,1080,42.7C1200,53,1320,75,1380,85.3L1440,96L1440,120L1380,120C1320,120,1200,120,1080,120C960,120,840,120,720,120C600,120,480,120,360,120C240,120,120,120,60,120L0,120Z"></path>
+        </svg>
+    </div>
+
+    <div class="container">
+        <nav class="nav-wrapper">
+            <button class="nav-btn active" onclick="APP.nav('tab-home')">🏠 Home</button>
+            <button class="nav-btn" onclick="APP.nav('tab-recipes')">🍰 Recipes</button>
+            <button class="nav-btn" onclick="APP.nav('tab-pantry')">🥚 Pantry</button>
+            <button class="nav-btn" onclick="APP.nav('tab-shopping')">🛒 Shopping</button>
+            <button class="nav-btn" onclick="APP.nav('tab-logs')">📖 Logs</button>
+            <button class="nav-btn" onclick="APP.nav('tab-tools')">⚖️ Tools</button>
+        </nav>
+
+        <!-- HOME -->
+        <div id="tab-home" class="section active">
+            <div class="card cake-card" style="text-align:center; padding:60px 20px;">
+                <h1 style="font-size:3.5rem; margin-bottom:10px; color:white; text-shadow: 3px 3px var(--pom-brown);">Welcome to the Bakery!</h1>
+                <p style="font-size:1.4rem; margin-bottom:30px; color:var(--pom-brown); font-weight:700;">Let's make something sweet and pudding-like today! 🍮</p>
+                <button class="btn" onclick="APP.nav('tab-recipes')" style="width:auto; padding: 20px 40px; background:var(--pom-brown);">Browse All Treats</button>
+            </div>
+            
+            <div class="grid" style="margin-top:40px;">
+                <div class="card cake-card" onclick="APP.nav('tab-pantry')" style="text-align:center;">
+                    <div style="font-size:4rem;">🥚</div>
+                    <h3 style="color:white; text-shadow: 2px 2px var(--pom-brown);">Pantry Tracker</h3>
+                    <p style="font-weight:600; color:var(--pom-brown);">Manage your ingredients</p>
+                </div>
+                <div class="card cake-card" onclick="APP.nav('tab-shopping')" style="text-align:center;">
+                    <div style="font-size:4rem;">🛒</div>
+                    <h3 style="color:white; text-shadow: 2px 2px var(--pom-brown);">Shopping List</h3>
+                    <p style="font-weight:600; color:var(--pom-brown);">Never miss a treat</p>
+                </div>
+                <div class="card cake-card" onclick="APP.nav('tab-logs')" style="text-align:center;">
+                    <div style="font-size:4rem;">📖</div>
+                    <h3 style="color:white; text-shadow: 2px 2px var(--pom-brown);">Baking Log</h3>
+                    <p style="font-weight:600; color:var(--pom-brown);">Notes & experiences</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- PANTRY TRACKER -->
+        <div id="tab-pantry" class="section">
+            <div class="card">
+                <h2>🥚 Pantry Tracker</h2>
+                <div class="pantry-input-group">
+                    <div style="flex:2;">
+                        <label>Ingredient Name</label>
+                        <input type="text" id="panName" placeholder="e.g., Flour" style="margin-top:5px;">
+                    </div>
+                    <div style="flex:1;">
+                        <label>Quantity</label>
+                        <input type="text" id="panQty" placeholder="e.g., 2kg" style="margin-top:5px;">
+                    </div>
+                    <button class="btn" onclick="APP.savePantryItem()" style="padding:15px 30px; font-size:1rem; min-width:120px;">Add Item</button>
+                </div>
+                <div id="pantryList"></div>
+            </div>
+        </div>
+
+        <!-- SHOPPING LIST -->
+        <div id="tab-shopping" class="section">
+            <div class="card">
+                <h2>🛒 Shopping List</h2>
+                <div class="shopping-input-group">
+                    <div style="flex:2;">
+                        <label style="color:white;">Buy what? (e.g. Eggs)</label>
+                        <input type="text" id="shopName" placeholder="Item name" style="margin-top:5px;">
+                    </div>
+                    <div style="flex:1;">
+                        <label style="color:white;">Quantity</label>
+                        <input type="text" id="shopQty" placeholder="e.g. 1 dozen" style="margin-top:5px;">
+                    </div>
+                    <button class="btn" onclick="APP.saveShoppingItem()" style="box-shadow: 0 4px 0 var(--pom-brown); min-width:100px;">Add 🛒</button>
+                </div>
+                
+                <div id="shoppingList" style="margin-bottom:30px;"></div>
+                
+                <button class="btn" onclick="APP.completeShopping()" style="background:var(--success); box-shadow: 0 6px 0 #689F38; width:100%; padding:25px; font-size:1.5rem; border-radius:20px;">
+                    ✨ Complete & Add Checked to Pantry 🥚
+                </button>
+            </div>
+        </div>
+
+        <!-- BAKING LOGS -->
+        <div id="tab-logs" class="section">
+            <div class="card">
+                <h2>📖 Baking Log</h2>
+                <div class="form-group" style="margin-bottom:15px;">
+                    <input type="text" id="logTitle" placeholder="What did you bake today?">
+                    <textarea id="logNote" placeholder="Notes on how it went, improvements, etc." style="height:100px; margin-top:10px;"></textarea>
+                    <button class="btn" onclick="APP.saveLog()" style="margin-top:10px;">Save Entry 📝</button>
+                </div>
+            </div>
+            <div id="logsList"></div>
+        </div>
+
+        <!-- RECIPES LIST -->
+        <div id="tab-recipes" class="section">
+            <div class="card" style="margin-bottom:30px; background: var(--sponge-yellow); border:4px solid var(--pom-yellow);">
+                <div class="flex-row" style="flex-wrap:wrap;">
+                    <input type="search" id="searchBar" placeholder="Search for puddings, pies, cakes..." onkeyup="APP.renderRecipes()" style="flex:2;">
+                    
+                    <select id="filterCat" onchange="APP.renderRecipes()" style="flex:1;">
+                        <option value="All">All Categories</option>
+                        <option value="Cakes">Cakes 🍰</option>
+                        <option value="Cookies">Cookies 🍪</option>
+                        <option value="Puddings">Puddings 🍮</option>
+                        <option value="Pies">Pies 🥧</option>
+                        <option value="Muffins">Muffins 🧁</option>
+                        <option value="Pastries">Pastries 🥐</option>
+                        <option value="Frozen">Frozen 🍦</option>
+                    </select>
+
+                    <select id="sortOrder" onchange="APP.renderRecipes()" style="flex:1;">
+                        <option value="newest">Newest First</option>
+                        <option value="oldest">Oldest First</option>
+                        <option value="az">A-Z</option>
+                        <option value="time">Fastest</option>
+                    </select>
+                </div>
+            </div>
+            <div id="recipeGrid" class="grid"></div>
+        </div>
+
+        <!-- ADD/EDIT FORM -->
+        <div id="tab-add" class="section">
+            <div class="card">
+                <h2 id="formTitle">New Sweet Recipe</h2>
+                <form id="recipeForm" onsubmit="event.preventDefault(); APP.saveRecipe();">
+                    <input type="hidden" id="recId">
+                    <input type="hidden" id="recExistingImg">
+
+                    <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));">
+                        <div style="display: flex; flex-direction: column; gap: 20px;">
+                            <div class="form-group">
+                                <label>Recipe Name</label>
+                                <input type="text" id="recTitle" placeholder="e.g. Caramel Pudding" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Short Description</label>
+                                <textarea id="recDesc" placeholder="A soft and jiggly treat..." style="height:100px;"></textarea>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Cover Image</label>
+                            <div class="image-upload-wrapper">
+                                <div style="font-size: 2.5rem;">📸</div>
+                                <input type="file" id="recImg" accept="image/*" style="border:none; padding:0; background:transparent;">
+                                <p style="font-size: 0.85rem; margin: 0; color: var(--pom-brown); font-weight:700;">Tap to select or drag & drop</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));">
+                        <div class="form-group">
+                            <label>Category</label>
+                            <select id="recCat">
+                                <option value="Cakes">Cake</option>
+                                <option value="Cookies">Cookie</option>
+                                <option value="Puddings">Pudding</option>
+                                <option value="Pies">Pie</option>
+                                <option value="Muffins">Muffin</option>
+                                <option value="Pastries">Pastry</option>
+                                <option value="Frozen">Frozen/Ice Cream</option>
+                                <option value="Other">Other Sweet</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Time (mins)</label>
+                            <input type="number" id="recTime" placeholder="45">
+                        </div>
+                        <div class="form-group">
+                            <label>Temp (°F)</label>
+                            <input type="number" id="recTemp" placeholder="350">
+                        </div>
+                        <div class="form-group">
+                            <label>Servings</label>
+                            <input type="number" id="recServ" value="1" min="1">
+                        </div>
+                    </div>
+
+                    <div class="grid">
+                        <div class="form-group">
+                            <label>Ingredients (one per line)</label>
+                            <textarea id="recIng" style="height:200px;" placeholder="- 2 cups Flour&#10;- 1 cup Sugar"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Instructions</label>
+                            <textarea id="recInst" style="height:200px;" placeholder="1. Mix everything...&#10;2. Bake it..."></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Chef's Notes & Modifications</label>
+                        <textarea id="recNotes" placeholder="Use almond milk for vegan version..." style="height:100px;"></textarea>
+                    </div>
+
+                    <div class="flex-row" style="margin-top:20px;">
+                        <button class="btn btn-secondary" type="button" onclick="APP.nav('tab-recipes')" style="flex:1;">Cancel</button>
+                        <button class="btn" type="submit" style="flex:2;">Save Recipe 💾</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- DETAIL VIEW (Dynamic) -->
+        <div id="tab-detail" class="section">
+            <div id="recipeDetailView"></div>
+        </div>
+
+        <!-- TOOLS / CONVERTERS -->
+        <div id="tab-tools" class="section">
+            <h2 style="font-size: 3rem; text-align:center; margin-bottom:40px; color: var(--pom-brown);">Kitchen Helpers</h2>
+            
+            <div class="converter-container">
+                <div class="grid">
+                    <!-- Temp -->
+                    <div class="converter-box">
+                        <h3 style="border-bottom: 2px solid var(--strawberry); padding-bottom: 10px; margin-bottom: 20px;">🌡️ Temperature</h3>
+                        <div class="flex-row">
+                            <div class="form-group" style="flex:1">
+                                <label>Fahrenheit</label>
+                                <input type="number" id="conv-f" oninput="APP.convertTemp('f2c')" placeholder="°F">
+                            </div>
+                            <div class="form-group" style="flex:1">
+                                <label>Celsius</label>
+                                <input type="number" id="conv-c" oninput="APP.convertTemp('c2f')" placeholder="°C">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Time -->
+                    <div class="converter-box">
+                        <h3 style="border-bottom: 2px solid var(--pom-yellow); padding-bottom: 10px; margin-bottom: 20px;">⏱️ Time</h3>
+                        <div class="flex-row">
+                            <div class="form-group" style="flex:1">
+                                <label>Minutes</label>
+                                <input type="number" id="conv-min" oninput="APP.convertTime('m2h')" placeholder="mins">
+                            </div>
+                            <div class="form-group" style="flex:1">
+                                <label>Hours</label>
+                                <input type="number" id="conv-hr" oninput="APP.convertTime('h2m')" placeholder="hrs">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Weight -->
+                    <div class="converter-box" style="grid-column: 1 / -1;">
+                        <h3 style="border-bottom: 2px solid var(--pom-brown); padding-bottom: 10px; margin-bottom: 20px;">⚖️ Cups to Grams (Estimator)</h3>
+                        <div style="display: flex; gap: 30px; align-items: center; flex-wrap: wrap;">
+                            <div class="form-group" style="flex: 1; min-width: 200px;">
+                                <label>Enter Cups</label>
+                                <input type="number" id="conv-c2g-in" placeholder="Cups" oninput="APP.convert('c2g')">
+                            </div>
+                            <div style="font-size: 2.5rem;">➡️</div>
+                            <div style="flex: 2; min-width: 250px;">
+                                <label>Approximate Weight</label>
+                                <div id="conv-c2g-out" class="result-display">0g</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DATA MANAGEMENT -->
+                <div class="card" style="margin-top:40px; border:4px solid var(--pom-brown); background:var(--bg-body);">
+                    <h2 style="text-align:center; color:var(--pom-brown); margin-bottom:20px;">📦 Sync & Backup</h2>
+                    <p style="text-align:center; color:var(--text-light); margin-bottom:30px; font-weight:600;">
+                        Use these buttons to move your recipes and pantry between your Computer and Phone!
+                    </p>
+                    <div class="grid" style="grid-template-columns: 1fr 1fr; gap:20px;">
+                        <div class="converter-box" style="text-align:center;">
+                            <h3>Export Data</h3>
+                            <p style="font-size:0.85rem; margin-bottom:15px;">Download all your data as a file.</p>
+                            <button class="btn" onclick="APP.exportData()" style="width:100%;">💾 Export Backup</button>
+                        </div>
+                        <div class="converter-box" style="text-align:center;">
+                            <h3>Import Data</h3>
+                            <p style="font-size:0.85rem; margin-bottom:15px;">Upload a backup file from another device.</p>
+                            <label class="btn" style="width:100%; display:inline-block; cursor:pointer;">
+                                📂 Select File
+                                <input type="file" accept=".json" onchange="APP.importData(event)" style="display:none;">
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Mobile FAB for Add -->
+    <button class="fab" onclick="APP.nav('tab-add'); APP.clearForm();">+</button>
+
+    <script src="db.js"></script>
+    <script src="app.js"></script>
+    <script>
+        // Generate Sprinkles
+        const container = document.getElementById('sprinkles');
+        const colors = ['#FFB7B2', '#FFF4B8', '#6B4E3D', '#FFFFFF', '#FFD54F'];
+        for(let i=0; i<50; i++) {
+            const s = document.createElement('div');
+            s.className = 'sprinkle';
+            s.style.left = Math.random() * 100 + '%';
+            s.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+            s.style.animationDelay = Math.random() * 15 + 's';
+            s.style.animationDuration = (Math.random() * 10 + 10) + 's';
+            container.appendChild(s);
+        }
+    </script>
+</body>
+</html>
