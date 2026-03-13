@@ -177,12 +177,38 @@ header {
     box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
+.header-actions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.theme-toggle-btn {
+    background: rgba(255, 255, 255, 0.3) !important;
+    color: white !important;
+    border: 2px solid white !important;
+    padding: 8px 15px !important;
+    font-size: 0.9rem !important;
+}
+
+.menu-btn {
+    display: none;
+    background: white;
+    border: none;
+    font-size: 1.8rem;
+    padding: 5px 12px;
+    border-radius: 12px;
+    cursor: pointer;
+    color: var(--strawberry);
+    box-shadow: 0 4px 0 var(--strawberry-dark);
+}
+
 /* Navigation */
 .nav-wrapper {
     position: sticky;
     top: 20px;
     z-index: 100;
-    background: rgba(255, 255, 255, 0.85);
+    background: rgba(255, 255, 255, 0.9);
     backdrop-filter: blur(12px);
     padding: 12px;
     border-radius: 40px;
@@ -192,9 +218,10 @@ header {
     gap: 8px;
     justify-content: center;
     border: 3px solid var(--pom-yellow);
+    transition: all 0.3s ease;
 }
 
-[data-theme="dark"] .nav-wrapper { background: rgba(62, 50, 44, 0.85); border-color: var(--chocolate); }
+[data-theme="dark"] .nav-wrapper { background: rgba(62, 50, 44, 0.9); border-color: var(--chocolate); }
 
 .nav-btn {
     border: none;
@@ -206,6 +233,7 @@ header {
     color: var(--text-light);
     cursor: pointer;
     transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    white-space: nowrap;
 }
 
 .nav-btn:hover { color: var(--primary); transform: scale(1.05); }
@@ -261,17 +289,56 @@ header {
 .card:hover { 
     transform: translateY(-8px); 
     border-color: var(--accent);
-    animation: wobble 0.6s ease-in-out;
 }
 
-@keyframes wobble {
-    0% { transform: translateY(-8px) rotate(0deg); }
-    15% { transform: translateY(-8px) rotate(-2deg); }
-    30% { transform: translateY(-8px) rotate(2deg); }
-    45% { transform: translateY(-8px) rotate(-1deg); }
-    60% { transform: translateY(-8px) rotate(1deg); }
-    100% { transform: translateY(-8px) rotate(0deg); }
+@media (max-width: 768px) {
+    .menu-btn { display: block; }
+    
+    .nav-wrapper {
+        position: fixed;
+        top: 80px;
+        left: 20px;
+        right: 20px;
+        flex-direction: column;
+        border-radius: 24px;
+        padding: 20px;
+        transform: translateY(-200%);
+        opacity: 0;
+        pointer-events: none;
+        margin: 0;
+    }
+
+    .nav-wrapper.open {
+        transform: translateY(0);
+        opacity: 1;
+        pointer-events: all;
+    }
+
+    .nav-btn {
+        width: 100%;
+        text-align: left;
+        padding: 15px 25px;
+    }
+
+    .brand { font-size: 1.5rem; }
+    .logo-img { height: 48px; width: 48px; }
+
+    .cake-card h1 { font-size: 2.2rem !important; }
+    .cake-card p { font-size: 1.1rem !important; }
+    
+    .grid { grid-template-columns: 1fr; }
+    
+    .pantry-input-group, .shopping-input-group {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 15px;
+    }
+
+    .converter-box .flex-row {
+        flex-direction: column;
+    }
 }
+
 
 /* Modern Pastry Form */
 #tab-add .card {

@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pompompurin's Dessert Recipes</title>
+    <link rel="icon" type="image/jpg" href="img/pompompurin icon _ sticker.jpg">
     <!-- Cute Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
@@ -18,9 +19,12 @@
             <header>
                 <div class="brand">
                     <img src="img/pompompurin icon _ sticker.jpg" alt="Pompompurin" class="logo-img">
-                    Pompom's Bakery
+                    <span>Pompom's Bakery</span>
                 </div>
-                <button id="theme-btn" class="nav-btn" onclick="APP.toggleTheme()" style="background:rgba(255,255,255,0.3); color:white; border:2px solid white;">🌙 Theme</button>
+                <div class="header-actions">
+                    <button id="theme-btn" class="nav-btn theme-toggle-btn" onclick="APP.toggleTheme()">🌙 Theme</button>
+                    <button id="menu-toggle" class="menu-btn" onclick="APP.toggleMenu()">☰</button>
+                </div>
             </header>
         </div>
         <!-- Dripping Icing SVG -->
@@ -30,7 +34,7 @@
     </div>
 
     <div class="container">
-        <nav class="nav-wrapper">
+        <nav class="nav-wrapper" id="main-nav">
             <button class="nav-btn active" onclick="APP.nav('tab-home')">🏠 Home</button>
             <button class="nav-btn" onclick="APP.nav('tab-recipes')">🍰 Recipes</button>
             <button class="nav-btn" onclick="APP.nav('tab-pantry')">🥚 Pantry</button>

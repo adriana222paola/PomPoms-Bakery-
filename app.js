@@ -36,7 +36,16 @@ const APP = {
         const activeBtn = document.querySelector(`.nav-btn[onclick*="${id}"]`);
         if(activeBtn) activeBtn.classList.add('active');
         
+        // Close mobile menu if open
+        const nav = document.getElementById('main-nav');
+        if(nav) nav.classList.remove('open');
+        
         window.scrollTo(0,0);
+    },
+
+    toggleMenu: () => {
+        const nav = document.getElementById('main-nav');
+        if(nav) nav.classList.toggle('open');
     },
 
     toggleTheme: () => {
